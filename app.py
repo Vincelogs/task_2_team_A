@@ -1,21 +1,35 @@
-from flask import Flask, request, redirect, url_for, flash, jsonify
-import numpy as np
+# pylint: disable=invalid-name
+""" This script loads in a model """
+
 import pickle as p
-import json
+import traceback
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app)
 
 
-@app.route('/api/summarize', methods=['POST'])
+@app.route('/api/summarize', methods=['POST', 'GET'])
 def summarize():
-    data = request.get_json()
-    prediction = np.array2string(model.predict(data))
+    """ Returns summaery of articles """
+    if model:
+        try:
+            if request.method == 'POST':
+                article = request.json['article']
 
-    return jsonify(prediction)
+                summary = model.summarize(article)
 
-""" Load model file """
+                return jsonify(summary=summary)
+            return 'Coming soon'
+        except Exception:
+            return jsonify({'trace': traceback.format_exc()})
+    else:
+        print('You need a trained model first')
+        return 'Model not found'
+
 if __name__ == '__main__':
-    modelfile = 'model as a pickle file'
+    modelfile = 'modelfile.pkl'
     model = p.load(open(modelfile, 'rb'))
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='127.0.0.1', port=5000)
