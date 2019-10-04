@@ -6,6 +6,9 @@ import traceback
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
+# loading the model
+summarizer = 'modelfile.pkl'
+model = p.load(open(summarizer, 'rb'))
 
 app = Flask(__name__)
 CORS(app)
@@ -30,6 +33,4 @@ def summarize():
         return 'Model not found'
 
 if __name__ == '__main__':
-    modelfile = 'modelfile.pkl'
-    model = p.load(open(modelfile, 'rb'))
     app.run(debug=True, host='127.0.0.1', port=5000)
