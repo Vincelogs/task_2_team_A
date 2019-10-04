@@ -13,7 +13,7 @@ CORS(app)
 
 @app.route('/api/summarize', methods=['POST', 'GET'])
 def summarize():
-    """ Returns summaery of articles """
+    """ Returns summary of articles """
     if model:
         try:
             if request.method == 'POST':
