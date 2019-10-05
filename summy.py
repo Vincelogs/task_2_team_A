@@ -17,7 +17,7 @@ summy = Flask(__name__)
 
 @summy.route('/api/summarize', methods=['POST', 'GET'])
 # Get Data
-html = request.json['articleUrl']
+article_url = request.json['articleUrl']
 if not request.json or 'articleUrl' not in request.json:
         abort(400)
 # html = urllib.urlopen(url).read()

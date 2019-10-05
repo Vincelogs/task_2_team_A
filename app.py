@@ -25,7 +25,8 @@ def summarize():
                 summary = model.summarize(article)
 
                 return jsonify(summary=summary)
-            return 'Coming soon'
+            elif request.method == 'GET':
+                return 'Coming soon'
         except Exception:
             return jsonify({'trace': traceback.format_exc()})
     else:
