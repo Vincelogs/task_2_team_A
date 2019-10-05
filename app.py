@@ -22,7 +22,7 @@ def summarize():
         try:
             if request.method == 'POST':
                 article = request.json['article']
-                article = json.load(article)
+              # article = json.load(article)
                 summary = model.summarize(article)
 
                 return jsonify(summary=summary)
