@@ -5,6 +5,7 @@ import pickle as p
 import traceback
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import json
 
 # loading the model
 summarizer = 'modelfile.pkl'
@@ -21,7 +22,7 @@ def summarize():
         try:
             if request.method == 'POST':
                 article = request.json['article']
-
+                article = json.load(article)
                 summary = model.summarize(article)
 
                 return jsonify(summary=summary)
